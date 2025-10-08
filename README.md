@@ -1,2 +1,2 @@
-[![Preview of PDF](Workflow-preview.png)](Workflow.pdf)
-**This is the workflow so far**
+[![Preview of PDF](workflow-preview.png)](workflow.pdf)
+**Preview of PDF**
