@@ -47,6 +47,13 @@ body {
   animation: fadeIn 0.8s ease forwards;
 }
 
+button.inactive {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: auto; /* still clickable */
+}
+
+
 /* === Typography === */
 h1 {
   font-size: 2rem;

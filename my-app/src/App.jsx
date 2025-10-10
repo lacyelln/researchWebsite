@@ -7,9 +7,26 @@ function Home() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const [roomCode, setRoomCode] = useState("");
+  const [error, setError] = useState("");
+
 
   const handleClick= () => {
-      navigate("/survey");
+    if (!name.trim() || !roomCode.trim()) {
+      setError("⚠️ Name and room code are required.");
+      return;
+    }
+
+    setError("");
+    console.log("Logging in with:", name, roomCode);
+
+      navigate("/survey", {state: {name, roomCode}});
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleClick();
+    }
   };
 
   return(
@@ -20,6 +37,7 @@ function Home() {
           type="text"
           value={name} 
           onChange={(e) => setName(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="ex: Katie Smith"
           required
           />
@@ -28,11 +46,13 @@ function Home() {
           type="text" 
           value={roomCode}
           onChange={(e) => setRoomCode(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="ex: 675435"
           required
         />
         <div className="button-group">
-            <button onClick={handleClick}>Login</button>
+            <button onClick={handleClick} disabled={!name.trim() || !roomCode.trim()}>Login</button>
+            
         </div>
     </div>
   );
