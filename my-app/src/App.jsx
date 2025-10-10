@@ -3,6 +3,7 @@ import Survey from "./survey/survey";
 import { useState } from "react";
 import './App.css';
 import { loginUser } from '../services/apiService';
+import Interaction from "./interaction/interaction";
 
 function Home() {
   const [name, setName] = useState("");
@@ -13,9 +14,13 @@ function Home() {
 
   async function handleClick(){
     try {
+      if (!name || !roomCode){
+        console.log("You need both a name and a roomcode!");
+        return;
+      }
       const userId = await loginUser(name, roomCode);
       console.log(`${name} logged in!`);
-      navigate("/survey", { state: { userId } });
+      navigate("/interaction", { state: { userId } }); //change this to LLM page when added
     } catch (error) {
       setError(error.message);
     }
@@ -72,7 +77,9 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/survey" element={<Survey />} />
+        <Route path="/survey" element={<Survey />} /> 
+        <Route path="/interaction" element={<Interaction />} /> 
+        {/* add a route to llm page when its added */}
       </Routes>
     </Router>
     

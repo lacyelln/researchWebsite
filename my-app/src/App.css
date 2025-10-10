@@ -8,6 +8,38 @@
   z-index: 1000;
 }
 
+/* === Page Layout Positions === */
+.page-layout {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* --- Centered Welcome Message --- */
+.welcome-center {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* Room Code - Top Right */
+.room-top-right {
+  position: fixed;
+  top: 2rem; /* below the nav bar */
+  right: 0rem;
+  /* background: rgba(255, 255, 255, 0.8); */
+  padding: 0.5rem 1rem;
+  /* border-radius: 10px; */
+  /* box-shadow: 0 3px 8px rgba(103, 184, 214, 0.3); */
+  font-weight: 500;
+  color: #2d3a40;
+}
+
+
+
 body {
   margin: 0;
   height: 100vh;
@@ -46,6 +78,10 @@ body {
 #root {
   animation: fadeIn 0.8s ease forwards;
 }
+
+
+
+
 
 button.inactive {
   opacity: 0.6;
@@ -156,3 +192,10 @@ nav a:hover {
     transform: scale(1);
   }
 }
+
+.next-bottom-left {
+  position: fixed;
+  top: 45rem; /*move this go down to a greater value to go down */
+  right: 10rem; /*move this smaller to get it more right*/
+}
+
