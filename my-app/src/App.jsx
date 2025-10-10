@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Link, Routes, Route, useNavigate } from 'react
 import Survey from "./survey/survey";
 import { useState } from "react";
 import './App.css';
+import { loginUser } from '../services/apiService';
 
 function Home() {
   const [name, setName] = useState("");
@@ -10,16 +11,15 @@ function Home() {
   const [error, setError] = useState("");
 
 
-  const handleClick= () => {
-    if (!name.trim() || !roomCode.trim()) {
-      setError("⚠️ Name and room code are required.");
-      return;
+  async function handleClick(){
+    try {
+      const userId = await loginUser(name, roomCode);
+      console.log(`${name} logged in!`);
+      navigate("/survey", { state: { userId } });
+    } catch (error) {
+      setError(error.message);
     }
-
-    setError("");
-    console.log("Logging in with:", name, roomCode);
-
-      navigate("/survey", {state: {name, roomCode}});
+      
   };
 
   const handleKeyDown = (e) => {
