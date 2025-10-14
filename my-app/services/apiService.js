@@ -16,6 +16,10 @@ export async function loginUser(name, roomCode) {
 
 export async function getUser(userId) {
     // replace when connected to backend
-  return { id: userId, name: "Katie", roomCode: "675434" };
+  return { id: userId, name: "Lacy", roomCode: "675434" };
+}
+
+export async function sendSurvey(name, data) {
+  return {message: `data sent to service`, d: data};
 }
 

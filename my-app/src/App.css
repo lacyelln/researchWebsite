@@ -196,6 +196,130 @@ nav a:hover {
 .next-bottom-left {
   position: fixed;
   top: 45rem; /*move this go down to a greater value to go down */
-  right: 10rem; /*move this smaller to get it more right*/
+  right: 8rem; /*move this smaller to get it more right*/
 }
 
+/* === Chat Container === */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 1000px;
+  height: 600px;
+  position: relative;
+  top: 7rem; /* pushes just the chatbox down */
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(103, 184, 214, 0.3);
+  animation: fadeIn 0.8s ease forwards;
+  overflow: hidden;
+  font-family: "Poppins", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* === Chat Messages Area === */
+.chat-box {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: linear-gradient(180deg, #e3f2f9 0%, #c9e9f6 50%, #b4dce9 100%);
+  border-bottom: 2px solid #c7e4ee;
+}
+
+/* === Message Bubbles === */
+.message {
+  max-width: 70%;
+  padding: 0.7rem 1rem;
+  border-radius: 14px;
+  word-wrap: break-word;
+  box-shadow: 0 3px 6px rgba(103, 184, 214, 0.25);
+  animation: fadeIn 0.3s ease;
+  font-size: 0.95rem;
+}
+
+/* --- User Messages (Right side) --- */
+.message.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #9ad1e3, #67b8d6);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+/* --- Bot Messages (Left side) --- */
+.message.bot {
+  align-self: flex-start;
+  background: #ffffff;
+  color: #2d3a40;
+  border-bottom-left-radius: 4px;
+  border: 1px solid #c7e4ee;
+}
+
+#chat-form {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end; /* ensures textarea grows upward naturally */
+  border-top: 2px solid #c7e4ee;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem;
+}
+
+#chat-input {
+  width: 80%;
+  min-height: 2.5rem;
+  max-height: 8rem; /* optional: limit how tall it can grow */
+  resize: none;     /* prevent manual resize corner */
+  overflow-y: auto; /* show scrollbar when needed */
+  
+  border: 2px solid #c7e4ee;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  background: #fefefe;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(200, 230, 240, 0.3);
+  transition: all 0.3s ease;
+  line-height: 1.4;
+}
+
+#chat-input:focus {
+  outline: none;
+  border-color: #86cce2;
+  box-shadow: 0 0 10px rgba(134, 204, 226, 0.6);
+}
+
+#chat-input::placeholder {
+  color: #888; /* soft gray for subtlety */
+  font-family: "Poppins", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+
+/* === Send Button === */
+#chat-form button {
+  margin-left: 0.5rem;
+  background: linear-gradient(135deg, #9ad1e3, #67b8d6);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(103, 184, 214, 0.4);
+  transition: all 0.3s ease;
+}
+
+#chat-form button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #a2d9ed, #7acbe0);
+  box-shadow: 0 6px 18px rgba(103, 184, 214, 0.6);
+}
+
+#chat-form button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 8px rgba(103, 184, 214, 0.3);
+}

@@ -6,6 +6,7 @@ export function interaction(){
     const [user, setUser] = useState(null);
     const location = useLocation();
     const navigate = useNavigate();
+    const [message, setMessage] = useState("");
     const { userId } = location.state || {};
     const [error, setError] = useState("");
 
@@ -47,6 +48,27 @@ export function interaction(){
         <div className="next-bottom-left">
             <button onClick={handleClick}>Next</button>
         </div>
+        <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            {/* <!-- messages will appear here --> */}
+        </div>
+
+        <form id="chat-form">
+           <textarea
+            id="chat-input"
+            rows="1"
+            placeholder="Type a message..."
+            value={message}
+            onChange={(e) => {
+                setMessage(e.target.value);
+                e.target.style.height = "auto"; // reset height
+                e.target.style.height = e.target.scrollHeight + "px"; // set to content height
+            }}
+            />
+        <button type="submit">Send</button>
+        </form>
+        </div>
+
         </>
     )
 
