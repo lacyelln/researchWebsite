@@ -48,8 +48,8 @@ export function interaction(){
         <div className="next-bottom-left">
             <button onClick={handleClick}>Next</button>
         </div>
-        <div class="chat-container">
-        <div class="chat-box" id="chat-box">
+        <div className="chat-container">
+        <div className="chat-box" id="chat-box">
             {/* <!-- messages will appear here --> */}
         </div>
 

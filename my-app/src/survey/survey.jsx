@@ -49,7 +49,8 @@ export function Survey() {
         if (e.key === "Enter") {
         e.preventDefault();
         if (first && second && third) {
-            const updated = [...answer, { first, second, third }];
+            const updated = [...answer, {first, second, third }]; //maybe find a way to store that
+            // data in the db with a number associate to it to know which question?
             setAnswer(updated);
             handleClick(updated);
             } else {
