@@ -1,14 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getUser } from '../../services/apiService';
+import { getUser, sendLLMData, toLLM } from '../../services/apiService';
 
-export function interaction(){
+
+export function Interaction(){
     const [user, setUser] = useState(null);
     const location = useLocation();
     const navigate = useNavigate();
-    const [message, setMessage] = useState("");
+    const [prompt, setPrompt] = useState("");
+    const [messages, setMessages] = useState([]); 
     const { userId } = location.state || {};
     const [error, setError] = useState("");
+    const chatBoxRef = useRef(null);
 
     useEffect(() => {
         async function fetchUser() {
@@ -22,18 +25,42 @@ export function interaction(){
         fetchUser();
     }, []);
 
-    async function handleClick(){
-    try {
-        //const userId = await loginUser(name, roomCode); //probably change this to pass user information grabbed 
-        // from LLM interaction and pass certain variables to the survey
-        navigate("/survey", { state: { userId } }); //change this to LLM page when added
-    } catch (error) {
-        setError(error.message);
-        console.log("no movist");
-        console.log(error.message);
+    useEffect(() => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }
-        
-    };
+  }, [messages]);
+
+
+    async function handleSubmit(e){
+        e.preventDefault();
+    if (!user || !prompt.trim()) return;
+
+    const userMsg = { sender: "user", text: prompt };
+    setMessages((prev) => [...prev, userMsg]);
+    setPrompt("");
+
+    try {
+      const response = await toLLM(user.name, prompt);
+      console.log(`prompt: ${prompt}`);
+      console.log(`LLM response: ${JSON.stringify(response.response)}`);
+      const llmMsg = { sender: "llm", text: response.response || "(no response)" };
+      setMessages((prev) => [...prev, llmMsg]);
+
+      // Optional: log the exchange to your backend
+      const success = await sendLLMData(user.name, prompt, response.response);
+      console.log(`Data send to backend ${success.message}`);
+    } catch (err) {
+      console.error("Error:", err);s
+      setError(err.message || "Something went wrong.");
+    }
+    }
+
+    const handleKeyDown = (e) => {
+        if(e.key === "Enter"){
+            handleSubmit(e);
+        }
+    }
 
     return (
         <>
@@ -44,34 +71,49 @@ export function interaction(){
         <div className="room-top-right">
             {user ? <p>Room: {user.roomCode}</p> : null}
         </div>
-
-        <div className="next-bottom-left">
-            <button onClick={handleClick}>Next</button>
-        </div>
         <div className="chat-container">
-        <div className="chat-box" id="chat-box">
+        <div className="chat-box" id="chat-box" ref={chatBoxRef}>
             {/* <!-- messages will appear here --> */}
+            {
+                messages.map((msg, i) => (
+                    <div
+              key={i}
+              className={`chat-message ${
+                msg.sender === "user" ? "user-message" : "llm-message"
+              }`}
+            >
+              {msg.sender === "user"
+                ? `${user?.name || "User"}: ${msg.text}`
+                : `LLM: ${msg.text}`}
+            </div>
+                ))
+            }
         </div>
 
-        <form id="chat-form">
+        <form id="chat-form" onSubmit={handleSubmit}>
            <textarea
             id="chat-input"
             rows="1"
             placeholder="Type a message..."
-            value={message}
+            value={prompt}
             onChange={(e) => {
-                setMessage(e.target.value);
+                setPrompt(e.target.value);
                 e.target.style.height = "auto"; // reset height
                 e.target.style.height = e.target.scrollHeight + "px"; // set to content height
             }}
+            onKeyDown={handleKeyDown}
             />
         <button type="submit">Send</button>
         </form>
+        </div>
+        <div className="next-bottom-left">
+            <button onClick={() => navigate("/survey", { state: { userId } })}>
+            Next</button>
+           
         </div>
 
         </>
     )
 
 }
-
-export default interaction;
+export default Interaction;
