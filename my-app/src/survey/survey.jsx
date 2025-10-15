@@ -24,6 +24,7 @@ export function Survey() {
         setFirst("");
         setSecond("");
         setThird("");
+        navigate("/exit");
         
     } catch (error) {
       setError(error.message);
