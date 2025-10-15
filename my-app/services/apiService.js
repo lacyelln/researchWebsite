@@ -20,6 +20,16 @@ export async function getUser(userId) {
 }
 
 export async function sendSurvey(name, data) {
-  return {message: `data sent to service`, d: data};
+  return {message: `data sent to db`, d: data};
+}
+
+export async function toLLM(name, prompt){
+  //call to LLM and get the response back
+  //after getting back from LLM send into the DB
+  return {response: "how are you doing today?"}
+}
+
+export async function sendLLMData(name, prompt, response){
+  return {message: "LLM Data sent to db"};
 }
 
