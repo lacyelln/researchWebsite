@@ -4,6 +4,7 @@ import { useState } from "react";
 import './App.css';
 import { loginUser } from '../services/apiService';
 import Interaction from "./interaction/interaction";
+import Exit from "./exit"
 
 function Home() {
   const [name, setName] = useState("");
@@ -79,6 +80,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/survey" element={<Survey />} /> 
         <Route path="/interaction" element={<Interaction />} /> 
+        <Route path="/exit" element={<Exit />}/>
         {/* add a route to llm page when its added */}
       </Routes>
     </Router>
